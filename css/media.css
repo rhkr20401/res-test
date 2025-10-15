@@ -129,17 +129,24 @@
   .mOpen .mob_btn span:nth-child(1){transform: rotate(45deg); top: 50%;}
   .mOpen .mob_btn span:nth-child(2){transform: translateX(100%); opacity: 0;}
   .mOpen .mob_btn span:nth-child(3){transform: rotate(-45deg); top: 50%;}
-  .mOpen{overflow: hidden;}
+  .mOpen{overflow: hidden;} /* 메뉴가 나왔을 때 아래 컨텐츠의 스크롤은 막음 */
   .mOpen:after{
     content: '';
-    position: absolute;
+    position: fixed;
     top: 0;
     left: 0;
     width: 100vw;
     height: 100vh;
     background: rgba(0,0,0,0.7);
   }
+  /* 문제 발생
+    .mOpen:after가 position:absolute라서 부모를 기준으로 깔림.
+    메뉴 열린 뒤 스크롤하면 부모의 렌더링 범위를 벗어나거나 부모가 overflow높이 제한을 갖고 있으면 오버레이가 화면에서 사라진 듯 보일 수 있음
 
+    해결방법
+    (1)모달용 비어있는 요소를 하나 만들어서 배치하는 방법
+    (2) 가상클래스로 사용한 경우는 position:fixed로 변경하는 방법
+  */
   .tit_wrap h2.tit{
     font-size: 4rem;
     line-height: 4.5rem;
@@ -256,7 +263,6 @@
   .s3_slide .row:after{background: none;}
 
   /* 4~6 */
-  #section4{padding-top: 0;}
   #section4 a.con_btn,
   #section5 a.con_btn,
   #section6 a.con_btn{
